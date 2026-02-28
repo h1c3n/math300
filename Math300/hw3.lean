@@ -97,3 +97,4 @@ example (n : ℤ) : ∃ a : ℤ, 2 * a^3 ≥ n * a + 7 := by
     have h4 : n*(n + 7) + 7 = n^2 + 7*n + 7 := by ring
     rw [h3, h4]
     nlinarith [h2, hn]
+

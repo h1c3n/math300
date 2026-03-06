@@ -41,7 +41,7 @@ example {a b : ℤ} : a ^ 2 + b ^ 2 ≥ 2 * a * b := by
 example {r s : ℚ} (h1 : s + 3 ≥ r) (h2 : s + r ≤ 3) : r ≤ 3 := by
     have h3 : r ≤ 3 + s := by linarith [h1]
     have h4 : r ≤ 3 - s := by linarith [h2]
-    calc 
+    calc
         r = (r + r)/ 2 := by ring
         _ ≤ (3 - s + (3 + s)) / 2 := by rel [h3, h4]
         _ = 3 := by norm_num

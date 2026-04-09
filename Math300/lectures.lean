@@ -55,7 +55,6 @@ import Mathlib
 -- lemma Nat.le_of_dvd {a b : ℕ} (hb : 0 < b) (hab : a ∣ b) : a ≤ b := by
 -- lemma Nat.pos_of_dvd_of_pos {a b : ℕ} (hab : a ∣ b) (hb : 0 < b) : 0 < a := by
 
-
 example {a b : ℤ} (h1 : a - 2 * b = 1) : a = 2 * b + 1 := by
   linarith
 
@@ -440,3 +439,46 @@ example : ¬ (∃ n : ℕ, n ^ 2 = 2) := by
   obtain h1 | h2 := le_or_gt n 1
   · nlinarith
   · nlinarith
+
+example {P Q : Prop} (h1 : P ∨ Q) (h2 : ¬ Q) : P := by
+  obtain hP | hQ := h1
+  · exact hP
+  · contradiction
+
+example {P Q : Prop} : P → (P ∨ ¬ Q) := by
+  intro hP
+  left
+  apply hP
+
+example {P : Prop} : (P ∨ P) ↔ P := by
+  constructor
+  · intro hP
+    obtain h1 | h2 := hP
+    · exact h1
+    · exact h2
+  · intro hP
+    left
+    exact hP
+
+example {P Q R : Prop} : (P ∧ (Q ∨ R)) ↔ ((P ∧ Q) ∨ (P ∧ R)) := by
+  constructor
+  · intro h
+    obtain ⟨h1, h2 | h2⟩ := h
+    · left
+      constructor
+      · exact h1
+      · exact h2
+    · right
+      constructor
+      · exact h1
+      · exact h2
+  · intro h
+    obtain ⟨h1, h2⟩ | ⟨h3, h4⟩ := h
+    · constructor
+      · exact h1
+      · left
+        exact h2
+    · constructor
+      · exact h3
+      · right
+        exact h4
